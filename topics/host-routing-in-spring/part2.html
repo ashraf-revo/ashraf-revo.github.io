@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Ashraf Blog</title>
+    <link rel="stylesheet" type="text/css" href="../../css/site.main.css">
+    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
+    <script src="../../js/main.js"></script>
+</head>
+<body id="page">
+<div class="nav-plain-wrapper">
+    <div w3-include-html="../header.html"></div>
+</div>
+
+<div id="main" role="main">
+    <article class="hentry">
+        <div class="entry-wrapper">
+            <header class="entry-header">
+                <h1 class="entry-title">Host Routing In Spring framework</h1>
+            </header>
+            <div class="entry-content">
+                <div id="mdcontainer">
+
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+
+<div class="footer-wrapper muted-centered">
+    <div w3-include-html="../footer.html"></div>
+</div>
+</body>
+<script>
+    window.onload = function () {
+        md = document.createElement("zero-md")
+        md.setAttribute("src", "PART2-README.md")
+        md.setAttribute("no-shadow", "")
+        document.getElementById("mdcontainer").append(md)
+    }
+    includeHTML();
+</script>
+</html>
