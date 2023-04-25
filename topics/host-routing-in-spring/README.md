@@ -1,7 +1,6 @@
-# Host Routing
- when you make your backend server or load-balancer support `subdomain` and `custom domain` routing dynamically, so it could support unlimited number of domains 
+# What I mean by `Host Routing`
+ when you make your backend server or load-balancer support `subdomain` and `custom domain` routing dynamically, so it could serve under unlimited number of domains 
 
-all of those predicates are very interesting, but we need to focus on  `HOST` routing because it deserves more focusing especially when you know use cases for this feature 
 ### Host routing use cases
 - [help.shopify.com](https://help.shopify.com/en/manual/domains/add-a-domain)  use host routing to build `E-Commerce Website` for every user
 - [help.medium.com](https://help.medium.com/hc/en-us/articles/115003053487-Setting-up-a-custom-domain-for-your-profile-or-publication)  use host routing to build `Blog` for every user
@@ -65,6 +64,9 @@ then insert those content in the beaning of the file
 127.0.0.1	localhost.me
 127.0.0.1	www.localhost.me
 127.0.0.1	dev.localhost.me
+127.0.0.1	john.com
+127.0.0.1	ali.net
+127.0.0.1	www.stephane.net
 ```
 
 this hack will make our pc network to forward `dev.localhost.me`,`www.localhost.me`,`localhost.me`  and other domain to `localhost`
@@ -121,8 +123,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -138,8 +140,8 @@ public class UserApplication {
         SpringApplication.run(UserApplication.class, args);
     }
 
-    @GetMapping("{id}")
-    public User findOne(@PathVariable("id") String id) {
+    @GetMapping(params = "userId")
+    public User findOne(@RequestParam(value = "userId") String id) {
         return userRepository.findOne(id);
     }
 }
@@ -161,4 +163,21 @@ class UserRepositoryImpl implements UserRepository {
     }
 }
 ```
-testing it
+#### Testing step 1
+try to execute this http request
+```http request
+   GET http://john.com:8080/api/v1/user?userId=1
+```
+you should get response like this
+```json
+{
+  "id": "1",
+  "name": "jhon",
+  "email": "jhon@email.com"
+}
+```
+
+### summary
+as you see when you requested `john.com` it forwarded the request to the `user service`
+which this 30% of what we need as later we will remove the `?userId=1` from the request and make it only depend on the domain `john.com` so it will fetch the user info when we call `http://john.com:8080/api/v1/user` 
+so it will convert `johnb.com` -> `userId=1`
