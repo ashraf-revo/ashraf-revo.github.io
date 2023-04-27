@@ -184,7 +184,7 @@ you should see response like this
 now we can say that we build a sas solution 50% that allow any user in your system to serve his account under any domain
 
 but we still have some issue that we will address later like https support because every domain we serve should support https ,and we need a way to address this issues like 
-- configure our server to load certificate based on every request domain
-- store those certificates in central storage
-- caching this certificates for fast tls handshake 
+- configure our server to load certificate based on every request domain see [part3](https://blog.asrevo.com/topics/host-routing-in-spring/part3.html)
+- caching this certificates for fast tls handshake (out of scope , you could use in memory store like [caffeine](https://github.com/ben-manes/caffeine))
 - generate, renew and validate those certificates (out of scope but ,I can suggest using [acme4j&Encrypt](https://github.com/shred/acme4j)) and this article 
+- store those certificates in central storage (out of scope , you could use any service like s3 for storing those certificate keys)
